@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,6 +52,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
 
+        {/* VERCEL RADAR TRACKING */}
+        <Analytics />
       </body>
     </html>
   );
