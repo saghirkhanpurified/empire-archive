@@ -1,59 +1,62 @@
-export const dynamic = 'force-dynamic';
-import Link from "next/link";
 import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import { Metadata } from "next";
 
-// Modern Next.js: params is a Promise
-export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
-  
+export const dynamic = 'force-dynamic';
+
+// 1. DYNAMIC SEO BEACON: This tells Google exactly what this page is about.
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const slug = resolvedParams.slug;
+  const post = await prisma.article.findUnique({ where: { slug: resolvedParams.slug } });
+  
+  if (!post) return { title: 'Not Found' };
+  
+  return {
+    title: post.title,
+    description: `Read the full intelligence report on ${post.title}.`,
+    openGraph: {
+      title: post.title,
+      type: 'article',
+    }
+  }
+}
 
-  // Fetch the intelligence report from the database
+// 2. THE PAGE UI
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
   const post = await prisma.article.findUnique({
-    where: { slug: slug }
+    where: { slug: resolvedParams.slug }
   });
 
-  // Trigger 404 if the slug doesn't exist in our DB
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
-      {/* Top Navigation */}
-      <nav className="p-6 border-b border-slate-100 bg-slate-50/50 backdrop-blur-md sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto">
-          <Link href="/" className="text-indigo-600 font-bold hover:text-indigo-500 transition-colors">
-            ← Back to Archive Hub
-          </Link>
-        </div>
+    <main className="max-w-3xl mx-auto px-6 py-16 md:py-24">
+      {/* Breadcrumbs for SEO */}
+      <nav className="mb-8 text-sm font-mono text-slate-400 flex items-center gap-2">
+        <a href="/" className="hover:text-indigo-600 transition-colors">Home</a>
+        <span>/</span>
+        <span className="text-slate-600 truncate">{post.slug}</span>
       </nav>
 
-      {/* Article Body */}
-      <article className="max-w-3xl mx-auto py-16 px-6">
-        <header className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">
+      <article>
+        <header className="mb-12 border-b border-slate-200 pb-8">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-6 leading-tight">
             {post.title}
           </h1>
-          <div className="flex items-center text-slate-400 font-mono text-sm">
-            <span>FILE ID: {post.slug}</span>
-            <span className="mx-3">•</span>
-            <span>STATUS: VERIFIED</span>
+          <div className="flex items-center text-slate-500 text-sm">
+            <span className="bg-slate-100 px-3 py-1 rounded-full font-mono text-xs text-slate-600 border border-slate-200">
+              STATUS: DECLASSIFIED
+            </span>
           </div>
         </header>
 
-        {/* The Markdown Processor */}
-        <div className="prose prose-lg prose-indigo max-w-none">
+        {/* The Content Matrix */}
+        <div className="prose prose-lg prose-slate prose-headings:font-bold prose-headings:tracking-tight prose-a:text-indigo-600 hover:prose-a:text-indigo-500 max-w-none">
           <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
       </article>
-
-      {/* Footer Branding */}
-      <footer className="max-w-3xl mx-auto py-12 border-t border-slate-100 text-center text-slate-400 text-sm font-mono">
-        &copy; 2026 EMPIRE ARCHIVE // ALL RIGHTS RESERVED
-      </footer>
     </main>
   );
 }
