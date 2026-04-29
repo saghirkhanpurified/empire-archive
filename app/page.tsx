@@ -8,24 +8,66 @@ export default async function Home() {
 
   return (
     <main className="w-full">
-      {/* Hero Section */}
-      <header className="max-w-5xl mx-auto px-6 py-24 md:py-32">
-        <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 text-slate-900 leading-tight">
-          The Intelligence <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">
-            Vault.
-          </span>
-        </h1>
-        <p className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
-          Uncovering untouched digital strategies, deep-web history, and sovereign tech paradigms.
-        </p>
+      {/* 2-Column Responsive Hero Section */}
+      <header className="max-w-5xl mx-auto px-6 py-16 md:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Column: Typography */}
+          <div>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-slate-900 leading-tight">
+              The Intelligence <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">
+                Vault.
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-500 leading-relaxed mb-8">
+              Uncovering untouched digital strategies, deep-web history, and sovereign tech paradigms.
+            </p>
+            <a href="#briefings" className="inline-flex items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg">
+              Access the Archive
+            </a>
+          </div>
+
+          {/* Right Column: System Status Glass Card */}
+          <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square rounded-3xl bg-gradient-to-br from-slate-50 to-indigo-50/50 border border-slate-200/60 flex flex-col justify-center items-center p-6 md:p-8 overflow-hidden shadow-inner">
+            {/* Abstract Decorative Blurs */}
+            <div className="absolute -top-10 -right-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+            {/* Live Data Card */}
+            <div className="relative z-10 w-full max-w-sm bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                <span className="text-xs font-mono text-slate-400 tracking-wider">SYSTEM.CORE</span>
+                <span className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  ONLINE
+                </span>
+              </div>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-slate-500">Encrypted Records</span>
+                  <span className="font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{posts.length}</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-slate-500">Security Clearance</span>
+                  <span className="font-mono font-medium text-slate-900">Maximum</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-slate-500">Database Uplink</span>
+                  <span className="font-mono font-medium text-slate-900">Singapore (ap-southeast-1)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </header>
 
       {/* Grid Section */}
-      <section className="max-w-5xl mx-auto px-6 pb-12">
+      <section id="briefings" className="max-w-5xl mx-auto px-6 pb-24 scroll-mt-24">
         <div className="flex items-center justify-between mb-8 border-b border-slate-200 pb-4">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">Latest Briefings</h2>
-          <div className="text-sm font-mono text-slate-400 hidden sm:block">Records: {posts.length}</div>
+          <div className="text-sm font-mono text-slate-400 hidden sm:block">Total Indexed: {posts.length}</div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
