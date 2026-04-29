@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     siteName: 'Empire Archive',
     type: 'website',
   },
+  verification: {
+    google: 'Numt_xZgHuBPBALKfYw7inpQIHZk7DvRDR4fMW0qLko',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
