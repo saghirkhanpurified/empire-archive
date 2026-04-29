@@ -10,7 +10,7 @@ export default async function Home() {
     <main className="w-full">
       {/* Hero Section */}
       <header className="max-w-5xl mx-auto px-6 py-24 md:py-32">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-slate-900 leading-tight">
+        <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 text-slate-900 leading-tight">
           The Intelligence <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">
             Vault.

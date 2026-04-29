@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-slate-50 text-slate-900 selection:bg-indigo-100 flex flex-col`}>
+      <body className={`${inter.className} min-h-screen bg-white text-slate-900 selection:bg-indigo-100 flex flex-col`}>
         
         {/* GLOBAL GLASS NAVIGATION */}
         <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/70 backdrop-blur-lg">
