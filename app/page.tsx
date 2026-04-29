@@ -5,6 +5,9 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const posts = await prisma.article.findMany();
+  
+  // Grab the first post to use as the Featured Article
+  const featuredPost = posts.length > 0 ? posts[0] : null;
 
   return (
     <main className="w-full">
@@ -24,40 +27,36 @@ export default async function Home() {
               Uncovering untouched digital strategies, deep-web history, and sovereign tech paradigms.
             </p>
             <a href="#briefings" className="inline-flex items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg">
-              Access the Archive
+              Browse the Archive
             </a>
           </div>
 
-          {/* Right Column: System Status Glass Card */}
-          <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square rounded-3xl bg-gradient-to-br from-slate-50 to-indigo-50/50 border border-slate-200/60 flex flex-col justify-center items-center p-6 md:p-8 overflow-hidden shadow-inner">
-            {/* Abstract Decorative Blurs */}
-            <div className="absolute -top-10 -right-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl"></div>
+          {/* Right Column: Dynamic Featured Article */}
+          <div className="relative w-full lg:h-[350px] rounded-3xl bg-gradient-to-br from-indigo-50 to-cyan-50 border border-slate-200/60 p-6 sm:p-8 overflow-hidden shadow-inner flex flex-col justify-end group">
+            {/* Abstract Background Blur */}
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-110"></div>
             <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
-            {/* Live Data Card */}
-            <div className="relative z-10 w-full max-w-sm bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
-                <span className="text-xs font-mono text-slate-400 tracking-wider">SYSTEM.CORE</span>
-                <span className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  ONLINE
-                </span>
-              </div>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-slate-500">Encrypted Records</span>
-                  <span className="font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{posts.length}</span>
+            {featuredPost ? (
+              <Link href={`/${featuredPost.slug}`} className="relative z-10 block bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-indigo-300 transition-all duration-300 transform group-hover:-translate-y-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
+                    Featured Briefing
+                  </span>
+                  <span className="text-xs font-mono text-slate-500 truncate">LATEST</span>
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-slate-500">Security Clearance</span>
-                  <span className="font-mono font-medium text-slate-900">Maximum</span>
+                <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                  {featuredPost.title}
+                </h3>
+                <div className="mt-4 flex items-center text-sm font-bold text-indigo-600">
+                  Read Full Report <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-slate-500">Database Uplink</span>
-                  <span className="font-mono font-medium text-slate-900">Singapore (ap-southeast-1)</span>
-                </div>
-              </div>
-            </div>
+              </Link>
+            ) : (
+               <div className="relative z-10 block bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-sm">
+                 <p className="text-slate-500 font-medium">Awaiting first intelligence report...</p>
+               </div>
+            )}
           </div>
 
         </div>
