@@ -7,10 +7,15 @@ import remarkGfm from "remark-gfm";
 // Make the page dynamic
 export const dynamic = 'force-dynamic';
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  // Fetch the specific article from the database
+// THE UPGRADE: We must declare params as a Promise for Next.js 15
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  
+  // Await the parameters before trying to use them
+  const resolvedParams = await params;
+
+  // Fetch the specific article from the database using the resolved slug
   const post = await prisma.article.findUnique({
-    where: { slug: params.slug },
+    where: { slug: resolvedParams.slug },
   });
 
   if (!post) {
@@ -38,7 +43,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           </h1>
           <div className="flex items-center gap-4 text-sm font-mono text-slate-400">
             <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-emerald-500"></div>
+              <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
               Verified Protocol
             </div>
             <span>//</span>
