@@ -6,17 +6,17 @@ import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
-// GLOBAL SEO BASE
+// GLOBAL SEO BASE - UNIFIED BRANDING
 export const metadata: Metadata = {
   title: {
-    template: '%s | Empire Archive',
-    default: 'The Empire Archive | Tech, Security & Philosophy',
+    template: '%s | Intelligence Vault',
+    default: 'The Intelligence Vault | Tactical Guides & Systems',
   },
-  description: "A sovereign database of strategic research, cybersecurity history, and technological philosophy.",
+  description: "Highly actionable, text-based intelligence and systems for the modern student.",
   openGraph: {
-    title: 'The Empire Archive',
-    description: 'A sovereign database of strategic research.',
-    siteName: 'Empire Archive',
+    title: 'The Intelligence Vault',
+    description: 'Highly actionable, text-based intelligence.',
+    siteName: 'Intelligence Vault',
     type: 'website',
   },
   verification: {
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-lg">
           <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             <Link href="/" className="font-extrabold text-xl tracking-tighter text-slate-900 hover:text-indigo-600 transition-colors">
-              Empire<span className="text-indigo-600">Archive</span>
+              Intelligence<span className="text-indigo-600">Vault</span>
             </Link>
             
             {/* PROFESSIONAL NAVIGATION LINKS */}
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="w-full border-t border-slate-200 bg-white py-12 mt-24">
           <div className="max-w-5xl mx-auto px-6 text-center">
             <p className="text-sm font-mono text-slate-400">
-              &copy; {new Date().getFullYear()} EMPIRE ARCHIVE // SOVEREIGN INTELLIGENCE
+              &copy; {new Date().getFullYear()} THE INTELLIGENCE VAULT
             </p>
           </div>
         </footer>
