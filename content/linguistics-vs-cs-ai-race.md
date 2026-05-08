@@ -1,5 +1,7 @@
-# Why CS Majors Will Lose the AI Race to English Students
-
+---
+title: Why CS Majors Will Lose the AI Race to English Students
+slug: linguistics-vs-cs-ai-race
+---
 The tech industry is currently obsessed with Python, GPUs, and neural weights. They are treating Artificial Intelligence as a math problem. 
 
 **They are wrong.**

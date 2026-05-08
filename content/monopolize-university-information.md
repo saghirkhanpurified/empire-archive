@@ -1,5 +1,7 @@
-# How to Monopolize Your University's Information Flow
-
+---
+title: How to Monopolize Your University's Information Flow
+slug: monopolize-university-information
+---
 Most students treat the role of **Class Representative (CR)** as a chore or a simple administrative task.
 
 They are missing the tactical reality: The CR is the **Primary Node** in a university's information architecture. If you control the flow of data, you control the consensus of the group.
