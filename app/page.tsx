@@ -4,110 +4,138 @@ import prisma from "@/lib/db";
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const posts = await prisma.article.findMany();
-  const featuredPost = posts.length > 0 ? posts[0] : null;
+  const posts = await prisma.article.findMany({
+    orderBy: { id: 'desc' }
+  });
+  
+  const featuredPost = posts[0];
+  const secondaryPosts = posts.slice(1);
 
   return (
-    <main className="w-full">
-      {/* HERO SECTION */}
-      <header className="max-w-5xl mx-auto px-6 py-16 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-slate-900 leading-tight">
-              The Intelligence <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">
-                Vault.
+    <main className="w-full bg-[#FCFCFC] min-h-screen">
+      {/* 1. THE STATUS BAR (Visual Authority) */}
+      <div className="w-full border-b border-slate-200 bg-white py-3">
+        <div className="max-w-6xl mx-auto px-6 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              System Live
+            </span>
+            <span>//</span>
+            <span>Location: Peshawar, PK</span>
+          </div>
+          <div>Last Update: {new Date().toLocaleDateString()}</div>
+        </div>
+      </div>
+
+      {/* 2. THE LEAD REPORT (High-Impact Entry) */}
+      <section className="max-w-6xl mx-auto px-6 pt-16 pb-24">
+        <Link href={`/${featuredPost?.slug}`} className="group block">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-8">
+              <span className="inline-block mb-6 text-xs font-bold tracking-widest text-indigo-600 uppercase border-b-2 border-indigo-600 pb-1">
+                Featured Intelligence
               </span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-500 leading-relaxed mb-8">
-              Highly actionable, text-based guides for modern students. Learn to leverage AI, navigate Web3, and build digital systems.
-            </p>
-            <a href="#briefings" className="inline-flex items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg">
-              Read the Guides
-            </a>
+              <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] mb-8 group-hover:text-indigo-600 transition-colors">
+                {featuredPost?.title || "Initializing Vault..."}
+              </h1>
+              <p className="text-xl text-slate-500 leading-relaxed max-w-2xl">
+                A deep-dive analysis into the shifting paradigms of 2026. This report deconstructs the intersection of technical architecture and human survival.
+              </p>
+            </div>
+            <div className="lg:col-span-4 lg:pt-20">
+              <div className="p-8 bg-slate-900 rounded-2xl text-white shadow-2xl transform transition-transform group-hover:-translate-y-2">
+                <div className="text-xs font-mono text-slate-400 mb-4 tracking-widest uppercase">Abstract</div>
+                <p className="text-sm leading-relaxed text-slate-300">
+                  Accessing the core protocols of the Intelligence Vault. This document contains high-signal data designed for the modern operator.
+                </p>
+                <div className="mt-8 flex items-center font-bold text-sm text-indigo-400">
+                  Open File <span className="ml-2">→</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </section>
+
+      {/* 3. THE MASTER INDEX (The Vertical Archive) */}
+      <section id="archive" className="w-full bg-white border-t border-slate-200 pt-24 pb-32">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <h2 className="text-4xl font-black tracking-tighter text-slate-900 mb-2">The Archive</h2>
+              <p className="text-slate-500 font-medium">Classified reports on AI, Linguistics, and Systems.</p>
+            </div>
+            <div className="h-px flex-grow bg-slate-100 mx-8 hidden md:block"></div>
+            <div className="text-xs font-mono text-slate-400 font-bold uppercase tracking-widest">
+              Total Entries: {posts.length}
+            </div>
           </div>
 
-          <div className="relative w-full lg:h-[350px] rounded-3xl bg-gradient-to-br from-indigo-50 to-cyan-50 border border-slate-200/60 p-6 sm:p-8 overflow-hidden shadow-inner flex flex-col justify-end group">
-            <div className="absolute -top-10 -right-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-110"></div>
-            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl"></div>
-
-            {featuredPost ? (
-              <Link href={`/${featuredPost.slug}`} className="relative z-10 block bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-indigo-300 transition-all duration-300 transform group-hover:-translate-y-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="inline-flex items-center rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
-                    Featured
-                  </span>
-                  <span className="text-xs font-mono text-slate-500 truncate">LATEST</span>
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                  {featuredPost.title}
-                </h3>
-                <div className="mt-4 flex items-center text-sm font-bold text-indigo-600">
-                  Read Guide <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">→</span>
+          <div className="divide-y divide-slate-100">
+            {secondaryPosts.map((post) => (
+              <Link key={post.id} href={`/${post.slug}`} className="group block py-10 transition-all hover:px-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="flex-grow max-w-3xl">
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">
+                        Report #{post.id.toString().padStart(3, '0')}
+                      </span>
+                      <span className="h-1 w-1 rounded-full bg-slate-200"></span>
+                      <span className="text-[10px] font-mono font-bold text-indigo-500 uppercase tracking-widest">
+                        Verified Access
+                      </span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                      {post.title}
+                    </h3>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right hidden md:block">
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Status</div>
+                      <div className="text-xs font-bold text-slate-900">DECRYPTED</div>
+                    </div>
+                    <div className="h-12 w-12 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-indigo-600 group-hover:bg-indigo-50 transition-all">
+                      <span className="text-indigo-600 font-bold">→</span>
+                    </div>
+                  </div>
                 </div>
               </Link>
-            ) : (
-               <div className="relative z-10 block bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-sm">
-                 <p className="text-slate-500 font-medium">Awaiting first guide...</p>
-               </div>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* NEW: ABOUT MISSION SECTION (Makes it scrollable) */}
-      <section className="bg-slate-50 border-y border-slate-200 py-24">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">How We Provide Value</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">We strip away the noise and fluff to bring you pure, text-based tactical knowledge designed to solve real problems.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold text-xl mb-6">1</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">AI Workflows</h3>
-              <p className="text-slate-600">Actionable prompt engineering and AI systems to cut your study time and automate repetitive academic tasks safely.</p>
-            </div>
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-xl flex items-center justify-center font-bold text-xl mb-6">2</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Web3 & Crypto</h3>
-              <p className="text-slate-600">Zero-cost guides on how to navigate the blockchain ecosystem and hunt airdrops without risking your own capital.</p>
-            </div>
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-6">3</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Digital Systems</h3>
-              <p className="text-slate-600">Step-by-step tutorials on building Notion workspaces, organizing research, and taking control of your digital life.</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ARTICLE GRID SECTION */}
-      <section id="briefings" className="max-w-5xl mx-auto px-6 py-24 scroll-mt-24">
-        <div className="flex items-center justify-between mb-8 border-b border-slate-200 pb-4">
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Latest Guides</h2>
-          <div className="text-sm font-mono text-slate-400 hidden sm:block">Articles: {posts.length}</div>
+      {/* 4. THE SYSTEM PHILOSOPHY (Scrolling Context) */}
+      <section className="py-32 bg-slate-900 text-white overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden text-[15vw] font-black leading-none select-none tracking-tighter break-all">
+          INTELLIGENCEVAULTINTELLIGENCEVAULT
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {posts.map((post) => (
-            <Link key={post.id} href={`/${post.slug}`} className="group block h-full">
-              <article className="h-full p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                    {post.title}
-                  </h3>
-                </div>
-                
-                <div className="mt-8 flex items-center text-sm font-semibold text-indigo-600 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0">
-                  Read Guide <span className="ml-1">→</span>
-                </div>
-              </article>
-            </Link>
-          ))}
+        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-tight">
+            We don't provide news.<br/> We provide <span className="text-indigo-400 font-serif italic">leverage</span>.
+          </h2>
+          <p className="text-xl text-slate-400 leading-relaxed mb-12 max-w-2xl mx-auto font-medium">
+            The Intelligence Vault is a specialized database for students at the Institute of Management Sciences and beyond. We build the systems that help you navigate the 2026 digital landscape.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-white/10">
+            <div>
+              <div className="text-2xl font-bold text-white mb-1">AI</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Mastery</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-white mb-1">Web3</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Protocol</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-white mb-1">Notion</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Systems</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-white mb-1">Linguistics</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Control</div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
