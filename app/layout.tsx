@@ -16,22 +16,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-[#FCFCFC] text-slate-900 selection:bg-indigo-100 flex flex-col`}>
+    <html lang="en" className="scroll-smooth bg-[#09090b]">
+      <body className={`${inter.className} bg-[#09090b] text-zinc-100 selection:bg-indigo-500/30 flex flex-col min-h-screen`}>
         
-        <nav className="w-full border-b border-slate-200 bg-white sticky top-0 z-[100]">
+        {/* DARK GLASS NAVIGATION */}
+        <nav className="w-full border-b border-white/10 bg-[#09090b]/80 backdrop-blur-xl sticky top-0 z-[100] transition-all duration-300">
           <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             <Link href="/" className="group flex items-center gap-3">
-              <div className="h-8 w-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-xl transition-transform group-hover:rotate-12">
+              <div className="h-8 w-8 bg-white rounded-lg flex items-center justify-center text-[#09090b] font-black text-xl transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.3)]">
                 V
               </div>
-              <span className="font-black text-xl tracking-tighter uppercase">Intelligence Vault</span>
+              <span className="font-black text-xl tracking-tighter uppercase text-white group-hover:text-indigo-400 transition-colors duration-300">Intelligence Vault</span>
             </Link>
             
-            <div className="flex items-center gap-8 text-[11px] font-bold tracking-[0.2em] text-slate-400 uppercase">
-              <Link href="/" className="hover:text-indigo-600 transition-colors">Index</Link>
-              <Link href="/about" className="hover:text-indigo-600 transition-colors">Manifesto</Link>
-              <Link href="/about" className="bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-all text-center">
+            <div className="flex items-center gap-8 text-[11px] font-bold tracking-[0.2em] text-zinc-400 uppercase">
+              <Link href="/#archive" className="hover:text-white transition-colors duration-300">Archive</Link>
+              <Link href="#" className="hover:text-white transition-colors duration-300">Manifesto</Link>
+              <Link href="#" className="bg-white text-[#09090b] px-5 py-2.5 rounded-md hover:bg-indigo-500 hover:text-white hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all duration-300 text-center">
                 Contact
               </Link>
             </div>
@@ -42,15 +43,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </div>
 
-        <footer className="w-full border-t border-slate-200 bg-white py-20">
+        {/* DARK FOOTER */}
+        <footer className="w-full border-t border-white/10 bg-[#09090b] py-20 mt-32">
           <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="font-black text-2xl tracking-tighter">INTELLIGENCE VAULT</div>
-            <div className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">
+            <div className="font-black text-2xl tracking-tighter text-white opacity-50">INTELLIGENCE VAULT</div>
+            <div className="text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-widest">
               &copy; {new Date().getFullYear()} Peshawar Operational Hub
-            </div>
-            <div className="flex gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              <Link href="#" className="hover:text-indigo-600">Twitter</Link>
-              <Link href="#" className="hover:text-indigo-600">GitHub</Link>
             </div>
           </div>
         </footer>
