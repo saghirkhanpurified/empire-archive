@@ -18,30 +18,26 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <main className="w-full pt-24 pb-32">
-      <article className="max-w-3xl mx-auto px-6 relative">
+    <main className="w-full pt-20 pb-32 bg-white min-h-screen">
+      <article className="max-w-3xl mx-auto px-6">
         
-        {/* Subtle background glow for the reading page */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-indigo-900/10 blur-[100px] pointer-events-none -z-10"></div>
-
-        <div className="mb-16">
-          <Link href="/#archive" className="text-xs font-mono font-bold tracking-widest text-zinc-500 hover:text-indigo-400 transition-colors flex items-center gap-2 inline-flex uppercase">
+        <div className="mb-12">
+          <Link href="/#archive" className="text-xs font-mono font-bold tracking-widest text-slate-400 hover:text-indigo-600 transition-colors flex items-center gap-2 inline-flex uppercase">
             <span>←</span> Return to Archive
           </Link>
         </div>
 
-        <header className="mb-16 pb-12 border-b border-white/10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
+        <header className="mb-16 pb-8 border-b border-slate-100">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
             {post.title}
           </h1>
         </header>
 
-        {/* PROSE-INVERT is the magic word that makes markdown look good on dark backgrounds */}
-        <div className="prose prose-lg prose-invert prose-zinc max-w-none 
-          prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white
-          prose-a:text-indigo-400 hover:prose-a:text-indigo-300 
-          prose-blockquote:border-l-indigo-500 prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-zinc-300 prose-blockquote:rounded-r-lg
-          prose-strong:text-white prose-code:text-indigo-300 prose-code:bg-indigo-500/10 prose-code:px-1 prose-code:rounded">
+        <div className="prose prose-lg prose-slate max-w-none 
+          prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900
+          prose-a:text-indigo-600 hover:prose-a:text-indigo-500 
+          prose-blockquote:border-l-indigo-500 prose-blockquote:bg-slate-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-slate-700 prose-blockquote:rounded-r-lg
+          prose-strong:text-slate-900 prose-code:text-indigo-600 prose-code:bg-indigo-50 prose-code:px-1 prose-code:rounded">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content}
           </ReactMarkdown>
